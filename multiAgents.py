@@ -234,8 +234,8 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
     for action in actions:
       if action == "Stop":
         continue
-      nextState = gameState.generateSuccessor(0,action, -10000, 10000)
-      nextScore = self.minV(nextState, self.depth)
+      nextState = gameState.generateSuccessor(0,action)
+      nextScore = self.minV(nextState, self.depth , -10000, 10000)
       if nextScore > maxScore:
         maxScore = nextScore
         maxAction = action
@@ -253,10 +253,10 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
       if action == 'Stop':
         continue
       nextState = gameState.generateSuccessor(0,action)
-      maxScore = max(maxScore, self.minV(nextState, d - 1))
-      if v >= beta:
-          return v
-      alpha = max(alpha, v)
+      maxScore = max(maxScore, self.minV(nextState, d - 1, a, b))
+      if maxScore >= b:
+          return maxScore
+      a = max(a, maxScore)
     return maxScore
 
 
@@ -270,7 +270,10 @@ class AlphaBetaAgent(MultiAgentSearchAgent):
       if action == 'Stop':
         continue
       nextState = gameState.generateSuccessor(1,action)
-      minScore = min(self.maxV(nextState, d - 1), minScore)
+      minScore = min(self.maxV(nextState, d - 1, a, b), minScore)
+      if minScore <= a:
+        return minScore
+      b = min(b, minScore)
     return minScore
 
 
