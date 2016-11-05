@@ -96,7 +96,7 @@ class ReflexAgent(Agent):
 
     capScore = 0
     if newPos in currentGameState.getCapsules():
-        capScore = 120    
+        capScore = 100    
 
     #print ghostScore, minDistScore, eatFoodScore, stopScore, capScore
     return successorGameState.getScore() - minDistScore - ghostScore + stopScore + eatFoodScore + capScore
